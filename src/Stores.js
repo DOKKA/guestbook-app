@@ -6,17 +6,20 @@ class GuestStore extends Reflux.Store
 	constructor()
 	{
 		super();
-		this.state = {count: 0};
+		this.state = {messages: []};
 		this.listenables = Actions;
 	}
 	
-	onSubmit()
+	onSubmit(email, messageBody)
 	{
-        //console.log(arguments)
+		console.log(this.state)
+		const message = {
+			email: email,
+			text: messageBody
+		};
         this.setState((prevState, props)=>{
-            return {count: prevState.count +1};
+            return {messages: [...prevState.messages, message]};
         });
-		//this.setState({count: this.state.count+1});
 	}
 	
 }

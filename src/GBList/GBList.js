@@ -12,16 +12,18 @@ class GBList extends Reflux.Component {
 
   render() {
     const messageList =  this.state.messages.map((message, index) => {
-      return (<li key={index}>
-        <a href={'mailto:'+message.email} >{message.email}</a><br/>
-        <span>{message.text}</span>
-        </li>);
+      return (
+          <a href={'mailto:'+message.email} key={index} class="list-group-item">
+          <h4 class="list-group-item-heading">{message.email}</h4>
+          <p class="list-group-item-text">{message.text}</p>
+        </a>
+        );
     });
 
     return (
-      <ul className="GBList">
+      <div class="list-group">
         {messageList}
-      </ul>
+      </div>
     );
   }
 }

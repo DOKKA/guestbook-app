@@ -6,8 +6,23 @@ class GuestStore extends Reflux.Store
 	constructor()
 	{
 		super();
-		this.state = {messages: []};
+		this.state = {messages: this.getMessages()};
 		this.listenables = Actions;
+		//console.log(this.getMessages());
+	}
+
+	getMessages(){
+		var messages = localStorage.getItem('messages');
+		if(messages){
+			return JSON.parse(messages);
+		} else {
+			return [];
+		}
+	}
+
+	setMessages(messages){
+		var messagesJSON = JSON.stringify(messages);
+		localStorage.setItem('messages',messagesJSON);
 	}
 	
 	onSubmit(email, messageBody)
@@ -17,8 +32,12 @@ class GuestStore extends Reflux.Store
 			email: email,
 			text: messageBody
 		};
+
+		var messages = this.getMessages();
+		messages.push(message);
+		this.setMessages(messages);
         this.setState((prevState, props)=>{
-            return {messages: [...prevState.messages, message]};
+            return {messages: messages};
         });
 	}
 	
